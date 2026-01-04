@@ -1,17 +1,65 @@
 # RAG-Powered-Chatbot-to-Turn-Customer-Feedback-into-Actionable-Insights
 
-A Retrieval-Augmented Generation (RAG) chatbot that analyzes real financial customer complaints to deliver evidence-based insights. It uses semantic search with vector databases and LLMs to help product, support, and compliance teams quickly identify trends across financial services.
+Overview
 
-Task 1: Data Understanding and Preprocessing Summary
-Overview of the Data For the first part of the project, we looked at the Consumer Financial Protection Bureau (CFPB) dataset to find complaints that matter most to CrediTrust. Since the full file is very large, we started with a sample of 100,000 rows. After filtering for our five specific products (Credit Cards, Personal Loans, Savings Accounts, and Money Transfers) and removing any empty stories, we were left with a high-quality set of 205 complaints to begin our analysis.
+This project implements a Retrieval-Augmented Generation (RAG) chatbot designed to analyze real financial customer complaints and transform unstructured feedback into evidence-based insights. The system enables product, support, and compliance teams to quickly identify recurring issues across multiple financial services.
 
-Key Findings from EDA Our initial analysis shows that "Checking or savings account" is currently the biggest source of customer feedback, making up about 80% of our filtered sample. We also looked at how much customers like to write; the average complaint is quite detailed, which is perfect for our AI model to learn from later. Most stories focus on specific issues like account management and transfer delays.
+By combining semantic search with large language models (LLMs), the chatbot retrieves relevant complaint narratives and generates concise, grounded answers to user questions.
 
-Cleaning for the AI To make sure our chatbot gives the best answers, we cleaned the text narratives. We made everything lowercase and removed special symbols and numbers. This "polishing" step ensures that the AI focuses only on the important words when it tries to understand what Asha's customers are worried about. We saved this cleaned data as filtered_complaints.csv so it is ready for the next step.
+Data Understanding and Preprocessing (Task 1)
+Dataset Overview
 
-Task 2: Vector Store Indexing and Embedding Summary
-Sampling Strategy To ensure the chatbot is helpful across all areas of CrediTrust, we performed a stratified sample of 10,000 complaints. By using stratification, we ensured that our sample contains a balanced mix of all five target products: Credit Cards, Personal Loans, Savings Accounts, and Money Transfers. This prevents the AI from being biased toward only the most common complaints.
+The project uses complaint data from the Consumer Financial Protection Bureau (CFPB). Due to the large size of the original dataset, an initial sample of 100,000 records was used. After filtering for the target products—Credit Cards, Personal Loans, Savings Accounts, and Money Transfers—and removing records with missing narratives, a clean and high-quality subset of 205 complaints was obtained for exploratory analysis.
 
-Text Processing (Chunking) Since customer complaints can be very long, we divided the stories into smaller "chunks" of 500 characters each. We included a 50-character overlap between chunks. This is a critical step because it ensures that no important context is lost if a sentence happens to be split between two pieces.
+Key EDA Findings
 
-Creating the Digital Brain (Embeddings) We used the all-MiniLM-L6-v2 model to turn our text into mathematical vectors. These vectors allow the computer to understand the "meaning" and "emotion" behind customer words rather than just looking for exact keyword matches. These embeddings were then indexed using FAISS (Facebook AI Similarity Search) and saved in our vector_store/ directory. Our chatbot can now search through thousands of complaints in milliseconds to find relevant information.
+Complaints related to checking and savings accounts dominate the dataset, accounting for approximately 80% of the filtered sample.
+
+Most complaint narratives are detailed and descriptive, making them well-suited for downstream NLP tasks.
+
+Common themes include account management issues and transfer delays.
+
+Text Cleaning
+
+To improve embedding quality, complaint narratives were normalized by:
+
+Converting text to lowercase
+
+Removing special characters and numeric symbols
+
+The cleaned dataset was saved as filtered_complaints.csv for use in subsequent stages of the pipeline.
+
+Vector Store Indexing and Embedding (Task 2)
+Sampling Strategy
+
+A stratified sample of 10,000 complaints was created to ensure balanced representation across all target product categories. This approach prevents model bias toward more frequent complaint types.
+
+Text Chunking
+
+Complaint narratives were divided into overlapping text chunks:
+
+Chunk size: 500 characters
+
+Overlap: 50 characters
+
+This strategy preserves contextual continuity and ensures important information is not lost during segmentation.
+
+Embeddings and Vector Store
+
+The all-MiniLM-L6-v2 embedding model was used to convert text chunks into dense vector representations that capture semantic meaning. These embeddings were indexed using FAISS (Facebook AI Similarity Search) and persisted in the vector_store/ directory.
+
+This vector store serves as the core retrieval engine, enabling fast and accurate semantic search across thousands of complaint narratives.
+
+Key Technologies
+
+Python
+
+FAISS
+
+Sentence Transformers (all-MiniLM-L6-v2)
+
+Retrieval-Augmented Generation (RAG)
+
+Project Goal
+
+The final system allows internal stakeholders to ask natural-language questions about customer complaints and receive reliable, context-backed insights—shifting analysis from manual review to intel
