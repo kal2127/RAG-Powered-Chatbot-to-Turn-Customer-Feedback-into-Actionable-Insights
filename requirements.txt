@@ -5,3 +5,6 @@ scikit-learn
 sentence-transformers 
 langchain 
 chromadb
+langchain-community 
+faiss-cpu 
+langchain-huggingface
