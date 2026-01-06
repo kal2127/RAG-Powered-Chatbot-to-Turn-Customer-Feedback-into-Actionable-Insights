@@ -2,4 +2,9 @@ myvenv/
 .venv/
 env/
 ENV/
+vector_store/
+*.pkl
+*.faiss
+*.env
 *.csv
+*.parquet
